@@ -1,0 +1,52 @@
+"a"
+
+"b"
+
+<program> ::= a+ | b+
+
+// 定义一个加法
+<Number> ::= '0'| "1" | ... | "9"
+<DecimaNumer> ::= "0" | (('0'| "1" | ... | "9") <Number>*)
+<AdditiveExpression> ::= <DecimaNumer> |  <DecimaNumer> + <AdditiveExpression>
+
+1+2+3
+
+// 四则运算
+<Number> ::= "0" | "1" | "2" | ..... | "9"
+
+<DecimalNumber> ::= "0" | (("1" | "2" | ..... | "9") <Number>* )
+
+<PrimaryExpression> ::= <DecimalNumber> |
+    "(" <LogicalExpression> ")"
+
+<MultiplicativeExpression> ::= <PrimaryExpression> | 
+    <MultiplicativeExpression> "*" <PrimaryExpression>| 
+    <MultiplicativeExpression> "/" <PrimaryExpression>
+
+<AdditiveExpression> ::= <MultiplicativeExpression> | 
+    <AdditiveExpression> "+" <MultiplicativeExpression>| 
+    <AdditiveExpression> "-" <MultiplicativeExpression>
+
+<LogicalExpression> ::= <AdditiveExpression> | 
+    <LogicalExpression> "||" <AdditiveExpression> | 
+    <LogicalExpression> "&&" <AdditiveExpression>
+
+// 无限制文法（多表达式）
+<a> <b> <c> ::=
+?::=?
+
+// 上下文相关文法
+"a" <b> "c" ::=  “a” "x" "c" (a，c两个终结符之间，即所谓“上下文”限制)
+?<A>?::=?<B>?
+
+// 上下文无关文法
+<A>::= ? ()
+
+// 正则文法
+<A>::=<A>? (只允许左递归)
+
+
+**思考题**
+用正则把四则运算分析一下
+<Number> ::= /[0-9]/
+<DecimalNumber> ::= /0|[1-9][0-9]*/
