@@ -1,4 +1,9 @@
 /**
+ * 思路：
+ *
+ */
+
+/**
  * @param {string} str
  * @return {Array}
  */
