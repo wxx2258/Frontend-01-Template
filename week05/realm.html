@@ -74,9 +74,10 @@ while(queue.length) {
   let current  = queue.shift();
   // console.log(set.has(current.object))
   if (set.has(current.object)) {
+    // console.log(set.has(current.object))
     continue;
   }
-  set.add(current.object)
+  set.add(current.object);
   set2.add(current);
   for(let p of Object.getOwnPropertyNames(current.object)) {
     var property = Object.getOwnPropertyDescriptor(current.object, p);
@@ -102,5 +103,11 @@ while(queue.length) {
   }
 }
 console.log(set)
+let str = '';
+for (const val of set2.values()) {
+  console.log(val);
+  str += `${val.path.join('->')}<br/>`
+}
+document.write(str)
 </script>
 <!-- 作业 onV  antV  G6  -->
