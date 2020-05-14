@@ -1,4 +1,5 @@
 const net = require('net');
+const parser = require('./parser');
 const enumContentType = {
     form: 'application/x-www-form-urlencoded',
     json: 'application/json'
@@ -191,8 +192,8 @@ class ThunkedPasrser {
                     }
                     this.current = this.WAITING_LENGTH_LINE_END;
                 } else {
-                    this.length *= 10;
-                    this.length += char.charCodeAt(0) - '0'.charCodeAt(0);
+                    this.length *= 16;
+                    this.length += parseInt(char, 16);
                 }
                 break;
             case this.WAITING_LENGTH_LINE_END:
@@ -237,7 +238,11 @@ void async function() {
         }
     })
     let response = await request.send();
-    console.log(response);
+
+    let dom = parser.parseHTML(response.body);
+    
+    // console.log(response);
+    console.log('dom: ', dom);
 }()
 
 
