@@ -11,6 +11,8 @@ let stack = [{
   children: []
 }]
 
+const layout = require('./layout');
+
 
 let rules = [];
 
@@ -96,7 +98,8 @@ function computeCss(element) {
       // class选择器
       var attr = element.attributes.filter(attr => attr.name === 'class')[0];
 
-      if (attr && attr.value === seletor.replace('.', '')) {
+      // if (attr && attr.value === seletor.replace('.', '')) {
+      if (attr &&  attr.value.indexOf(seletor.replace('.', '')) > -1) {
         return true;
       }
     } else {
@@ -184,6 +187,8 @@ function emit(token) {
         // console.log(top.children[0])
         addCssRules(top.children[0].content);
       }
+      // layout
+      layout(top);
       stack.pop();
     }
     currentToken = null;

@@ -1,0 +1,2 @@
+## 已知的坑
+在 mac os 10.15.4 环境下， npm i images 后，发现 /node_modules/images/vendor/darwin-x64-72/ 下缺失了一个文件 binding.node。这时候运行就会报错，提示当前images不支持该环境，此时去 对应的github上将包下载下来放到 /node_modules/images/vendor/darwin-x64-72/ 路径下，即可。
