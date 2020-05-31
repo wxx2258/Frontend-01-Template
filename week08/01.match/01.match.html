@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="div">
+    <p>
+      <div class="class" id="id"></div>
+    </p>
+  </div>
+</body>
+</html>
+<script src="./dist/index.js"></script>
+
+<!-- <script>
+function match(selector, element) {
+  console.log('element: ', element);
+  /* 
+  * 大概思路
+  // * 1. 首先split(',')）,判断是否匹配多个class，获取 selectorItemArr
+  // * 2. 遍历 selectorItemArr ，对每一项 seletorItem 进行匹配判断
+  （1，2步骤不应该是在这个函数中处理的，不属于这个函数的职能）
+  * 3. 查看 seletorItem 是否包含 space，>, +, ~ 等css连接符进行操作
+  * 4. 如果存在复杂选择器的 css选择器连接符，那么根据不同符号进行不同的匹配逻辑
+  * 5. 这里只处理空格情况，其他看情况再补。
+  *   *. 处理空格着 split(' ') ,获取 treeSelectorArr 子孙节点数组，依次往上遍历查找是否符合
+  *   *. 这中间可能存在 treeSelectorArr 中的 treeSelectorItem 可能存在符合选择器的情况，通过判断字符串，获取包含的所有简单选择器，然后判断该元素是否存在 
+  */
+  let result = false;
+  let treeSelectorArr
+
+  return result;
+}
+
+
+
+
+match("div #id.class", document.getElementById("id"));
+</script> -->
