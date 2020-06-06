@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>
+  let result = '';
+  let propertyObj = {}
+  // .forEach(function(item) {
+  //   result += item;
+  // })
+  for (const item of getComputedStyle(document.body)) {
+    const pre = item.split('-')[0];
+    // console.log(item,":", pre)
+    if (!propertyObj[pre]) {
+      propertyObj[pre] = [item];
+    } else {
+      propertyObj[pre].push(item);
+    }
+    
+  }
+  console.log(propertyObj);
+  for (const key in propertyObj) {
+    console.log('key: ', key);
+    const item = propertyObj[key];
+    result += '<li>'+key+'<ul>'
+    for (const propertyItem of item) {
+      result += `<li>${propertyItem}</li>`;
+    }
+    result += '</ul></li>'
+  }
+  document.body.innerHTML = `
+    <ul>
+      ${result}
+    </ul>
+  `;
+</script>
