@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a href="">3</a>
+    <div>4</div>
+  </div>
+</body>
+</html>
+
+<script>
+  let element= document.getElementById('a');
+  console.log('document: ', document);
+
+  /*
+  * 翻转DOM子节点
+  */
+  function reverseChildren(element) {
+    // 利用range，在fragment中操作完之后再插入（fragment不会产生重回重拍）
+    let range = new Range();
+
+    let fragment = range.extractContents();
+    var l  = element.childNodes.length;
+
+    while(l-- > 0) {
+      fragment.appendChild(element.childNodes[l]);
+    }
+
+    element.appendChild(fragment);
+
+  }
+
+  reverseChildren(element);
+</script>

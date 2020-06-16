@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a href="">3</a>
+    <div>4</div>
+  </div>
+</body>
+</html>
+
+<script>
+  let element= document.getElementById('a');
+  console.log('document: ', document);
+
+  /*
+  * 翻转DOM子节点
+  */
+  function reverseChildren(element) {
+    // 方法一，转为数组，将父元素的innerHtml清空，然后翻转，重新append进去
+    // let children = element.childNodes;
+
+    // 方法二：
+    var l  = element.childNodes.length;
+
+    while(l-- > 0) {
+      element.appendChild(element.childNodes[l]);
+    }
+  }
+
+  reverseChildren(element);
+</script>
