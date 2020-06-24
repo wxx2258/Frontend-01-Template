@@ -90,7 +90,7 @@
             this.reset()
           }
           
-          this.step = 3 - this.step
+          this.step = 3 - this.step // 删减进行状态切换
           this.show()
         }
       }
@@ -103,7 +103,7 @@
           this.reset()
         }
 
-        this.step = 3 - this.step
+        this.step = 3 - this.step // 删减进行状态切换
         this.show()
         if (this.willWin(this.pattern, this.step)) {
           console.log(this.dataMap[this.step] + 'will win')
@@ -156,6 +156,7 @@
             let temp = clone(pattern)
             temp[i][j] = step
             let opp = this.bestChoice(temp, 3 - step)
+            // console.log('opp: ', opp);
             if (-opp.result >= result) {
               point = [j, i]
               result = -opp.result

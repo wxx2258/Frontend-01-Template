@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>search-path</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .cell {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: gray;
+      border-bottom: solid 1px white;
+      border-right: solid 1px white;
+      vertical-align: middle;
+    }
+
+    #container {
+      width: 701px;
+      line-height: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+  </div>
+  <button onclick="localStorage.map = JSON.stringify(map)">save</button>
+  <button onclick="localStorage.map = ''">clear</button>
+  <button onclick="findPath(map, [0,0], [50, 50])">开始寻路</button>
+</body>
+
+</html>
+
+<script>
+  class Sorted {
+    constructor(data, compare) {
+      this.data = data;
+      this.compare = compare;
+    }
+    take() {
+      if (!this.data.length) {
+        return;
+      }
+      let min = this.data[0];
+      let minIndex = 0;
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.compare(this.data[i], min) < 0) {
+          min = this.data[i];
+          minIndex = i;
+        }
+      }
+      // 对于无序的数组，这里只需要把最后一个和当前需要pop出去的交换位置，然后pop最后一个即可
+      this.data[minIndex] = this.data[this.data.length - 1];
+      this.data.pop();
+      return min;
+    }
+    insert(v) {
+      this.data.push(v)
+    }
+    get length() {
+      return this.data.length;
+    }
+  }
+
+  // 二叉树
+  class BinaryHeap {
+    constructor(data, compare) {
+      this.data = data;
+      this.compare = compare;
+    }
+    take() {
+      if (!this.data.length) {
+        return;
+      }
+      let min = this.data[0];
+      let i = 0;
+      // fix heap
+      while(i < this.data.length) {
+        let leftLeaf = i * 2 + 1;
+        let rightLeaf = i * 2 + 2;
+        if (leftLeaf >= this.data.length) {
+          break;
+        }
+        if (rightLeaf >= this.data.length) {
+          this.data[i] = this.data[leftLeaf];
+          i = leftLeaf;
+          break;
+        }
+        if (this.compare(this.data[leftLeaf], this.data[rightLeaf]) < 0) {
+          this.data[i] = this.data[leftLeaf];
+          i = leftLeaf;
+        } else {
+          this.data[i] = this.data[rightLeaf];
+          i = rightLeaf;
+        }
+      }
+      if (i < this.data.length - 1) {
+        this.insertAt(i, this.data.pop());
+      } else {
+        this.data.pop();
+      }
+
+      return min;
+    }
+    insertAt(i, v) {
+      this.data[i] = v;
+      while (i > 0 && this.compare(v, this.data[Math.floor((i - 1)/ 2)]) < 0) {
+        this.data[i] = this.data[Math.floor((i - 1)/ 2)];
+        this.data[Math.floor((i - 1)/ 2)] = v;
+        i = Math.floor((i - 1)/ 2)
+      }
+    }
+    insert(v) {
+      this.insertAt(this.data.length, v);
+    }
+    get length() {
+      return this.data.length;
+    }
+  }
+
+  // let testHeap = new BinaryHeap([0,3,1,6,7,9,2], (a,b)=> a - b);
+
+
+
+  var map = localStorage.map ? JSON.parse(localStorage.map) : new Array(10000).fill(0);
+  let container = document.getElementById('container');
+  for (let y = 0; y < 100; y++) {
+    for (let x = 0; x < 100; x++) {
+      let cell = document.createElement('div');
+      cell.classList.add('cell');
+
+      if (map[y * 100 + x] === 1) {
+        cell.style.backgroundColor = 'black';
+      }
+
+      cell.addEventListener('mousemove', () => {
+        if (mouse) {
+          if (clear) {
+            cell.style.backgroundColor = '';
+            map[y * 100 + x] = 0;
+          } else {
+            cell.style.backgroundColor = 'black';
+            map[y * 100 + x] = 1;
+          }
+        }
+      })
+
+      container.appendChild(cell);
+    }
+  }
+
+  let mouse = false;
+  let clear = false;
+
+  document.addEventListener('mousedown', (e) => {
+    mouse = true;
+    clear = e.which === 3;
+  })
+  document.addEventListener('mouseup', () => {
+    mouse = false;
+  })
+  document.addEventListener('contextmenu', e => e.preventDefault())
+
+  function sleep(t) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, t);
+    })
+  }
+
+  async function findPath(map, start, end) {
+    map = map.slice();
+    function distance([x, y]) {
+      return (x - end[0]) ** 2 + (y - end[1]) ** 2;
+    }
+
+    // let collection = new Sorted([start], (a, b)=> distance(a) - distance(b));
+    let collection = new BinaryHeap([start], (a, b)=> distance(a) - distance(b));
+    
+    async function insert([x, y], pre) {
+      if (map[100 * y + x] !== 0) {
+        return;
+      }   
+      if (x < 0 || y < 0 || x >= 100 || y >= 100) {
+        return;
+      }
+      if (x === 3 && y === 2) {
+        console.log(pre);
+      }
+      map[100 * y + x] = pre;
+      container.children[y * 100 + x].style.backgroundColor = 'lightgreen';
+      await sleep(1);
+      collection.insert([x, y]);
+    }
+
+    while (collection.length) {
+      let [x, y] = collection.take();
+      if (x === end[0] && y === end[1]) {
+        let path = [];
+        let tempX = x;
+        let tempY = y;
+        while((tempX !== start[0] || tempY !== start[1])) {
+          path.push([tempX, tempY]);
+          container.children[tempY * 100 + tempX].style.backgroundColor = 'pink';
+          [tempX, tempY] = map[tempY * 100 + tempX];
+        }
+        return path;
+      }
+      await insert([x - 1, y], [x, y]);
+      await insert([x + 1, y], [x, y]);
+      await insert([x, y - 1], [x, y]);
+      await insert([x, y + 1], [x, y]);
+
+      // 斜插入待完善
+      await insert([x - 1, y - 1], [x, y]);
+      await insert([x + 1, y - 1], [x, y]);
+      await insert([x - 1, y + 1], [x, y]);
+      await insert([x + 1, y + 1], [x, y]);
+    }
+    return null;
+  }
+  // findPath(map, [0,0], [50, 50])
+  
+</script>
