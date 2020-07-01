@@ -1,7 +1,8 @@
 
 <script>
   /* 
-    * 相对KMP，增加了通配符 * ? 
+    * https://leetcode-cn.com/problems/wildcard-matching/
+    * 通配符 * ? ，匹配
     * * 如何处理
     * ？如何处理
   */
@@ -51,7 +52,7 @@
     }
 
     for (let j = 0; j <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
-      console.log(pattern.length, pattern.length - j, source.length - j)
+      console.log(pattern.length, pattern.length - j,pattern[pattern.length - j], source.length - j)
       if (pattern[pattern.length - j] !== source[source.length - j] &&
           pattern[pattern.length - j] !== '?') {
         return false;
@@ -62,5 +63,5 @@
 
   console.log(find('abcabcabx', 'a*b*bx'))
   console.log(find('abcabcabx', 'a*b*bx*c'))
-  console.log(find('abcabcabxcd', 'a*b*?x*c'))
+  console.log(find('abcabcabxxd', 'a*b*?x*d'))
 </script>
