@@ -1,6 +1,18 @@
-### proxy
+<!DOCTYPE html>
+<html lang="en">
 
-``` javascript
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="text">Hello {{name}}!</div>
+</body>
+
+</html>
+<script>
   let handlers = new Map();
   let usedReactivities = [];
   let reactivities = new Map();
@@ -59,21 +71,17 @@
       handlers.get(obj).get(prop).push(handler);
     }
   }
-
-```
-
-### 拖拽的基本思路
-``` javascript 
-  let dragable = document.getElementById('dragable')
-  dragable.addEventListener('mousedown',()=> {
-    let move = (e)=> {
-
-    }
-    let up = ()=> {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-    }
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+</script>
+<script>
+  // let range = document.getElementById('text')
+  let range = document.createRange()
+  range.setStart(document.getElementById('text').childNodes[0], 6);
+  range.setEnd(document.getElementById('text').childNodes[0], 14)
+  let data = reactive({
+    text: 'word'
+  });
+  effect(() => {
+    range.extractContents();
+    range.insertNode(document.createTextNode(data.text))
   })
-```
+</script>
