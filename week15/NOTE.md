@@ -1,5 +1,5 @@
 
-# 重学前端week15组件化One more thing：Vue风格的SFC
+# Vue风格的SFC
 
 https://html.spec.whatwg.org/multipage/parsing.html#tokenization
 
@@ -83,7 +83,7 @@ export default {
 
 </script>
 ```
-# 重学前端week15第二节组件化｜动画
+# 动画
 
 transform肯定不会出发重排。
 
