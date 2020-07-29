@@ -1,18 +1,20 @@
 let parser = require('./parser-teacher2');
 // let parser = require('./parser');
 
-module.exports = function(source, map) {
+module.exports = function (source, map) {
   let tree = parser.parseHTML(source);
 
   let template = null;
   let script = null;
-  for(let node of tree.children) {
+  for (let node of tree.children) {
     if (node.tagName === 'template') {
-      template = node.children.filter(e => e.type != 'text')[0];
+      // console.log('node: ', node);
+      template = node.children.filter((e) => e.type != 'text')[0];
+      // console.log('template: ', template);
       // template = node;
     }
     if (node.tagName === 'script') {
-      script = node.children[0].content
+      script = node.children[0].content;
     }
   }
   let visit = (node) => {
@@ -20,14 +22,16 @@ module.exports = function(source, map) {
       return JSON.stringify(node.content);
     }
     let attrs = {};
-    for(let attribute of node.attributes) {
+    for (let attribute of node.attributes) {
       attrs[attribute.name] = attribute.value;
     }
-    let children = node.children.map(node => {
+    let children = node.children.map((node) => {
       return visit(node);
-    })
-    return `createElement("${node.tagName}", ${JSON.stringify(attrs)}, ${children})`
-  }
+    });
+    return `createElement("${node.tagName}", ${JSON.stringify(
+      attrs
+    )}, ${children})`;
+  };
 
   let r = `
 import {createElement, Text, Wrapper} from "./createElement.js"
@@ -44,4 +48,4 @@ export class Carousel {
 }
 `;
   return r;
-}
+};

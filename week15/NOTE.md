@@ -84,6 +84,8 @@ export default {
 </script>
 ```
 # 动画
+在一帧中，产生多个函数，性能是不OK的
+
 
 transform肯定不会出发重排。
 
