@@ -1,39 +1,10 @@
-# 每周总结可以写在这里
-
-## TabPanel组件
-``` js
-let panel = (
-  <TabPanel>
-    <span title="title 1">this is content1</span>
-    <span title="title 2">this is content2</span>
-    <span title="title 3">this is content3</span>
-    <span title="title 4">this is content4</span>
-  </TabPanel>
-);
-```
-
-## listView组件
-``` javascript
-let list = (
-  <ListView data={data}>
-    {(record) => (
-      <figure>
-        <img src={record.url} />
-        <figCaption>{record.title}</figCaption>
-      </figure>
-    )}
-  </ListView>
-);
-```
-
-## Css-loader
-
-``` javascript
 let css = require('css');
 
 module.exports = function (source, map) {
   var styleSheet = css.parse(source);
+
   let name = this.resourcePath.match(/([^/]+).css$/)[1];
+  console.log('name: ', name);
 
   for (const rule of styleSheet.stylesheet.rules) {
     rule.selectors = rule.selectors.map((selector) =>
@@ -50,5 +21,3 @@ module.exports = function (source, map) {
   document.documentElement.appendChild(style);
   `;
 };
-
-```
