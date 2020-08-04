@@ -1,0 +1,16 @@
+{
+  "name": "generator-wxx",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./generators/app/index.js",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "files": [
+    "app",
+    "router"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  }
+}

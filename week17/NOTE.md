@@ -1,6 +1,6 @@
 # 每周总结可以写在这里
-
-## TabPanel组件
+## 组件
+### TabPanel组件
 ``` js
 let panel = (
   <TabPanel>
@@ -12,7 +12,7 @@ let panel = (
 );
 ```
 
-## listView组件
+### listView组件
 ``` javascript
 let list = (
   <ListView data={data}>
@@ -26,7 +26,7 @@ let list = (
 );
 ```
 
-## Css-loader
+### Css-loader
 
 ``` javascript
 let css = require('css');
@@ -52,3 +52,18 @@ module.exports = function (source, map) {
 };
 
 ```
+## 工具链
+* 初始化
+* 调试/开发
+* 测试
+* 发布
+
+### yeoman
+* 用户收集信息
+* npm的操作
+* 模板的操作
+
+
+#### console toolkit
+https://stackoverflow.com/questions/10585683/how-do-you-edit-existing-text-and-move-the-cursor-around-in-the-terminal
+https://github.com/heapwolf/cdir/blob/223fe0039fade4fad2bb08c2f7affac3bdcf2f89/cdir.js#L24
