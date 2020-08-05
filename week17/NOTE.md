@@ -67,3 +67,8 @@ module.exports = function (source, map) {
 #### console toolkit
 https://stackoverflow.com/questions/10585683/how-do-you-edit-existing-text-and-move-the-cursor-around-in-the-terminal
 https://github.com/heapwolf/cdir/blob/223fe0039fade4fad2bb08c2f7affac3bdcf2f89/cdir.js#L24
+
+相关知识：
+* node readline
+* terminal cursor handler
+
