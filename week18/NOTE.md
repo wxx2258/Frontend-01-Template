@@ -3,12 +3,18 @@
 
 #### dev 工具
 * server
-  * build
-  * watch
+  * build: webpack babel vue jsx postcss
+  * watch: fsevents
   * mock
-  * https
+  * http: ws
 * Client
-  * debugger:
+  * debugger: vscode devtool
   * source Map
 
-#### 
+#### 测试工具
+* mocha
+  * babel
+* nyc
+  * .nycrc
+* 支持src export 语法
+  * @istanbuljs/nyc-config-babel
