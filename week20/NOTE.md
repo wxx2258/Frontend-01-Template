@@ -17,3 +17,20 @@ https://developer.github.com/v3/
   * redirect_uri
   * login
 
+
+### hooks
+* 查看文件权限
+  * ls -l
+* 给文件添加权限
+  * chomod +x
+``` shell
+#!/usr/bin/env node 
+const process = require('process');
+
+console.log('hook is running');
+
+process.exit(1);
+
+```
+
+web hook
